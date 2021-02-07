@@ -31,7 +31,9 @@ a:link {
     text-decoration: none
 }
 a:hover {
-	background: none !important;
+	-webkit-transform:translateY(2%);
+	-ms-transform:translateY(2%);
+	transform:translateY(2%);
 	text-decoration: none
 }
 nav .dropdown-content {
@@ -1727,7 +1729,7 @@ a{
 	transition:opacity .2s
 }
 .cd-article-link:hover{
-	opacity:0.8
+	opacity:1
 }
 
 .week-long-event {

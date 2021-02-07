@@ -1150,7 +1150,7 @@ mark{background-color:hsla(355, 90%, 61%, 0.2);background-color:hsla(var(--color
 	--cd-color-border-s:0%;
 	--cd-color-border-l:92%;
 	--font-primary: "Trebuchet MS", Helvetica, sans-serif;--schedule-rows-number: 15;
-	--schedule-rows-height: 50px
+	--schedule-rows-height: 70px
 }
 
 body{

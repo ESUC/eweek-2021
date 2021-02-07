@@ -458,7 +458,7 @@ img,video,svg{
 			-ms-flex-preferred-size:calc(25% - 0.01px - var(--grid-gap, 1em));
 			flex-basis:calc(25% - 0.01px - 1em);
 			flex-basis:calc(25% - 0.01px - var(--grid-gap, 1em));
-			max-width:calc(25% - 0.01px - 1em)
+			max-width:calc(25% - 0.01px - 1em);
 			max-width:calc(25% - 0.01px - var(--grid-gap, 1em))
 		}
 		.col-4\@xs{
@@ -1149,13 +1149,19 @@ mark{background-color:hsla(355, 90%, 61%, 0.2);background-color:hsla(var(--color
 	--cd-color-border-h:0;
 	--cd-color-border-s:0%;
 	--cd-color-border-l:92%;
-	--font-primary: "Trebuchet MS", Helvetica, sans-serif;--schedule-rows-number: 29;
+	--font-primary: "Trebuchet MS", Helvetica, sans-serif;--schedule-rows-number: 15;
 	--schedule-rows-height: 50px
 }
 
 body{
 	color:hsl(0, 0%, 13%);
-	color:var(--cd-color-text)
+	color:var(--cd-color-text);
+}
+
+.content{
+	max-width: 1200px;
+	margin: 0 auto !important; 
+	float: none !important; 
 }
 
 a{

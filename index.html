@@ -1,237 +1,723 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--https://github.com/CodyHouse/schedule-template-->
 <!--https://codyhouse.co/demo/schedule-template/index.html-->
 <!--https://codepen.io/oltika/pen/GNvdgV-->
 
 <html lang="en">
+  <head>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-0PPMTGGPSZ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-<head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0PPMTGGPSZ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+      gtag("config", "G-0PPMTGGPSZ");
+    </script>
+    <script>
+      document.getElementsByTagName("html")[0].className += " js";
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    gtag('config', 'G-0PPMTGGPSZ');
-  </script>
-  <script>document.getElementsByTagName("html")[0].className += " js";</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Martel+Sans:200"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=Open+Sans"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:700"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script>
+      $(window)
+        .scroll(function () {
+          // selectors
+          var $window = $(window),
+            $body = $("body"),
+            $panel = $(".panel");
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Martel+Sans:200" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+          // Change 33% earlier than scroll position so colour is there when you arrive.
+          var scroll = $window.scrollTop() + $window.height() / 3;
 
-  <link rel="stylesheet" href="assets/css/style.css">
-  <title>ESUC Engineering Week 2021</title>
-</head>
+          $panel.each(function () {
+            var $this = $(this);
 
-<body>
-  <header>
-    <nav>
-      <div class="nav-wrapper white-text">
-        <a href="/#" class="brand-logo"><img src="assets/img/logo-white.png"></a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <div id="title_wrapper" class="hide-on-med-and-down">
-          <div id="title" class="">Engineering Society at</div>
-          <div id="sub-title" class="">University of California, Los Angeles</div>
-        </div>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="https://esuc-website.herokuapp.com/#about">ABOUT</a></li>
-          <!--<li><a href="/#blog">BLOG</a></li>-->
+            // if position is within range of this panel.
+            // So position of (position of top of div <= scroll position) && (position of bottom of div > scroll position).
+            // Remember we set the scroll to 33% earlier in scroll var.
+            if (
+              $this.position().top <= scroll &&
+              $this.position().top + $this.height() > scroll
+            ) {
+              // Remove all classes on body with color-
+              $body.removeClass(function (index, css) {
+                return (css.match(/(^|\s)color-\S+/g) || []).join(" ");
+              });
 
+              // Add class of currently active div
+              $body.addClass("color-" + $(this).data("color"));
+            }
+          });
+        })
+        .scroll();
+    </script>
+    <script>
+      // Open the Modal
+      function openModal() {
+        document.getElementById("myModal").style.display = "flex";
+      }
 
-          <li><a href="https://esuc-website.herokuapp.com/engineering_calendar">CALENDARS</a></li>
-          <!-- <li><a href="#" class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-hover="true" data-activates='calendar_dropdown'>CALENDARS</a></li> -->
+      function openModal2() {
+        document.getElementById("myModal2").style.display = "flex";
+      }
 
-          <!-- <ul id='calendar_dropdown' class='dropdown-content white-text'>
+      // Close the Modal
+      function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+        document.getElementById("myModal2").style.display = "none";
+      }
+
+      var slideIndex = 1;
+      showSlides(slideIndex);
+
+      // Next/previous controls
+      function plusSlides(n) {
+        showSlides((slideIndex += n));
+      }
+
+      // Thumbnail image controls
+      function currentSlide(n) {
+        showSlides((slideIndex = n));
+      }
+
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        var titleText = document.getElementById("img-title");
+        var authorText = document.getElementById("author");
+        if (n > slides.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = slides.length;
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "flex";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].dataset.caption;
+        titleText.innerHTML = dots[slideIndex - 1].dataset.title;
+        authorText.innerHTML = dots[slideIndex - 1].dataset.author;
+
+        var j;
+        var slides2 = document.getElementsByClassName("mySlides2");
+        var dots2 = document.getElementsByClassName("demo2");
+        var captionText2 = document.getElementById("caption2");
+        var titleText2 = document.getElementById("img-title2");
+        var authorText2 = document.getElementById("author2");
+        if (n > slides2.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = slides2.length;
+        }
+        for (i = 0; i < slides2.length; i++) {
+          slides2[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots2[i].className = dots2[i].className.replace(" active", "");
+        }
+        slides2[slideIndex - 1].style.display = "flex";
+        dots2[slideIndex - 1].className += " active";
+        captionText2.innerHTML = dots2[slideIndex - 1].dataset.caption;
+        titleText2.innerHTML = dots2[slideIndex - 1].dataset.title;
+        authorText2.innerHTML = dots2[slideIndex - 1].dataset.author;
+      }
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>ESUC Engineering Week 2021</title>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <div class="nav-wrapper white-text">
+          <a href="/#" class="brand-logo"
+            ><img src="assets/img/logo-white.png"
+          /></a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"
+            ><i class="material-icons">menu</i></a
+          >
+          <div id="title_wrapper" class="hide-on-med-and-down">
+            <div id="title" class="">Engineering Society at</div>
+            <div id="sub-title" class="">
+              University of California, Los Angeles
+            </div>
+          </div>
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a href="https://esuc-website.herokuapp.com/#about">ABOUT</a>
+            </li>
+            <!--<li><a href="/#blog">BLOG</a></li>-->
+
+            <li>
+              <a href="https://esuc-website.herokuapp.com/engineering_calendar"
+                >CALENDARS</a
+              >
+            </li>
+            <!-- <li><a href="#" class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-hover="true" data-activates='calendar_dropdown'>CALENDARS</a></li> -->
+
+            <!-- <ul id='calendar_dropdown' class='dropdown-content white-text'>
             <li><a href="/engineering_calendar">Engineering and Industry Calendars</a></li>
             <li><a href="/lounge_calendar">ESUC Lounge Calendar</a></li>
             <li class="divider"></li>
             <li><a href="/add_event">Add Your Event</a></li>
           </ul> -->
 
-          <!-- <li><a href="#" class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-hover="true" data-activates='info_dropdown'>INFO</a></li>
+            <!-- <li><a href="#" class='dropdown-button' data-beloworigin="true" data-constrainwidth="false" data-hover="true" data-activates='info_dropdown'>INFO</a></li>
   
           <ul id='info_dropdown' class='dropdown-content white-text'>
             <li><a href="/pinfo">Promotional Info</a></li>
             <li><a href="/cinfo">Our Club Partners</a></li>
           </ul> -->
 
-          <li><a href="https://esuc.github.io/ewd-2020/" target="_blank">EWD</a></li>
-          <li><a href="https://esuc-website.herokuapp.com/#officers">OFFICERS</a></li>
-          <li><a href="https://esuc-website.herokuapp.com/#sponsors">SPONSORS</a></li>
-        </ul>
-
-        <ul id="mobile-demo" class="side-nav">
-          <li><a href="https://esuc-website.herokuapp.com/#about">ABOUT</a></li>
-          <!--<li><a href="/#blog">BLOG</a></li>-->
-          <li><a href="#">CALENDARS</a></li>
-
-          <ul class='black-text'>
-            <li><a href="https://esuc-website.herokuapp.com/engineering_calendar">Engineering Calendar</a></li>
+            <li>
+              <a href="https://esuc.github.io/ewd-2020/" target="_blank">EWD</a>
+            </li>
+            <li>
+              <a href="https://esuc-website.herokuapp.com/#officers"
+                >OFFICERS</a
+              >
+            </li>
+            <li>
+              <a href="https://esuc-website.herokuapp.com/#sponsors"
+                >SPONSORS</a
+              >
+            </li>
           </ul>
 
-          <li><a href="https://esuc.github.io/eweek-2021/" target="_blank">EWEEK</a></li>
-          <li><a href="https://esuc-website.herokuapp.com/#officers">OFFICERS</a></li>
-          <li><a href="https://esuc-website.herokuapp.com/#sponsors">SPONSORS</a></li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <header class="cd-main-header text-center flex flex-column flex-center">
+          <ul id="mobile-demo" class="side-nav">
+            <li>
+              <a href="https://esuc-website.herokuapp.com/#about">ABOUT</a>
+            </li>
+            <!--<li><a href="/#blog">BLOG</a></li>-->
+            <li><a href="#">CALENDARS</a></li>
 
-    <h1 class="text-xl">ESUC 2021 Eweek Schedule</h1>
-    <p>Spring Quarter Week 2</p>
-    <p>April 4th, 2021 - April 10th, 2021</p>
-
-    <body><a href="http://bit.ly/esuc-eweek-2021">Click here to sign up!</a></body>
-
-    <br>
-    <h5>Art Display</h5>
-    <p>E-Week is all about celebrating engineering and showing off what engineers can do. This year, E-Week will include an arts display, where art created by engineers will be displayed on the ESUC website and Facebook for the entirety of E-Week. The purpose of this art display is to show that other than being good at math and science, engineers also possess creative and innovative talents. </p>
-    <body><a href="https://tinyurl.com/eweekartdisplay">Click here to submit Art Display entires!</a></body>
-  </header>
-
-  <div class="content">
-
-    <!-- <div class="week-long-event">
-      <a href="art_display.html"><img src="assets/img/art_display_pic_edit.jpg" border="0"></a>
-    </div> -->
-
-    <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
-      <div class="cd-schedule__timeline">
-        <ul>
-          <li><span>09:00</span></li>
-          <!-- <li><span>09:30</span></li> -->
-          <li><span>10:00</span></li>
-          <!-- <li><span>10:30</span></li> -->
-          <li><span>11:00</span></li>
-          <!-- <li><span>11:30</span></li> -->
-          <li><span>12:00</span></li>
-          <!-- <li><span>12:30</span></li> -->
-          <li><span>13:00</span></li>
-          <!-- <li><span>13:30</span></li> -->
-          <li><span>14:00</span></li>
-          <!-- <li><span>14:30</span></li> -->
-          <li><span>15:00</span></li>
-          <!-- <li><span>15:30</span></li> -->
-          <li><span>16:00</span></li>
-          <!-- <li><span>16:30</span></li> -->
-          <li><span>17:00</span></li>
-          <!-- <li><span>17:30</span></li> -->
-          <li><span>18:00</span></li>
-          <!-- <li><span>18:30</span></li> -->
-          <li><span>19:00</span></li>
-          <!-- <li><span>19:30</span></li> -->
-          <li><span>20:00</span></li>
-          <!-- <li><span>20:30</span></li> -->
-          <li><span>21:00</span></li>
-          <!-- <li><span>21:30</span></li> -->
-          <li><span>22:00</span></li>
-          <!-- <li><span>22:30</span></li> -->
-          <li><span>23:00</span></li>
-        </ul>
-      </div>
-
-      <div class="cd-schedule__events">
-        <ul>
-          <li class="cd-schedule__group">
-            <div class="cd-schedule__top-info"><span>Monday 4/5</span></div>
-
-            <ul>
-              <li class="cd-schedule__event">
-                <a data-start="19:00" data-end="20:00" data-content="event-1-jeopardy" data-event="event-1" href="#0">
-                  <em class="cd-schedule__name">Jeopardy</em>
-                </a>
-              </li>
-
-            </ul>
-          </li>
-
-          <li class="cd-schedule__group">
-            <div class="cd-schedule__top-info"><span>Tuesday 4/6</span></div>
-
-            <ul>
-              <li class="cd-schedule__event">
-                <a data-start="19:00" data-end="20:00" data-content="event-2-networking" data-event="event-3" href="#0">
-                  <em class="cd-schedule__name">Networking Night</em>
-                </a>
+            <ul class="black-text">
+              <li>
+                <a
+                  href="https://esuc-website.herokuapp.com/engineering_calendar"
+                  >Engineering Calendar</a
+                >
               </li>
             </ul>
-          </li>
 
-          <li class="cd-schedule__group">
-            <div class="cd-schedule__top-info"><span>Wednesday 4/7</span></div>
+            <li>
+              <a href="https://esuc.github.io/eweek-2021/" target="_blank"
+                >EWEEK</a
+              >
+            </li>
+            <li>
+              <a href="https://esuc-website.herokuapp.com/#officers"
+                >OFFICERS</a
+              >
+            </li>
+            <li>
+              <a href="https://esuc-website.herokuapp.com/#sponsors"
+                >SPONSORS</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="panel" data-color="white">
+      <header class="cd-main-header text-center flex flex-column flex-center">
+        <h1 class="text-xl">ESUC 2021 Eweek Schedule</h1>
+        <p>Spring Quarter Week 2</p>
+        <p>April 4th, 2021 - April 10th, 2021</p>
 
+        <body>
+          <a href="http://bit.ly/esuc-eweek-2021">Click here to sign up!</a>
+        </body>
+
+        <br />
+        <h5>Art Display</h5>
+        <p>
+          Come see the creative talents that UCLA engineers have to offer at our
+          virtual Art Display!
+        </p>
+        <a href="#art">Click here to view Art Display entires!</a>
+      </header>
+
+      <div class="content">
+        <!-- <div class="week-long-event">
+        <a href="art_display.html"><img src="assets/img/art_display_pic_edit.jpg" border="0"></a>
+      </div> -->
+
+        <div
+          class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule"
+        >
+          <div class="cd-schedule__timeline">
             <ul>
-              <li class="cd-schedule__event">
-                <a data-start="9:00" data-end="12:00" data-content="event-3-kids" data-event="event-4" href="#0">
-                  <em class="cd-schedule__name">Kids Day</em>
-                </a>
-              </li>
+              <li><span>09:00</span></li>
+              <!-- <li><span>09:30</span></li> -->
+              <li><span>10:00</span></li>
+              <!-- <li><span>10:30</span></li> -->
+              <li><span>11:00</span></li>
+              <!-- <li><span>11:30</span></li> -->
+              <li><span>12:00</span></li>
+              <!-- <li><span>12:30</span></li> -->
+              <li><span>13:00</span></li>
+              <!-- <li><span>13:30</span></li> -->
+              <li><span>14:00</span></li>
+              <!-- <li><span>14:30</span></li> -->
+              <li><span>15:00</span></li>
+              <!-- <li><span>15:30</span></li> -->
+              <li><span>16:00</span></li>
+              <!-- <li><span>16:30</span></li> -->
+              <li><span>17:00</span></li>
+              <!-- <li><span>17:30</span></li> -->
+              <li><span>18:00</span></li>
+              <!-- <li><span>18:30</span></li> -->
+              <li><span>19:00</span></li>
+              <!-- <li><span>19:30</span></li> -->
+              <li><span>20:00</span></li>
+              <!-- <li><span>20:30</span></li> -->
+              <li><span>21:00</span></li>
+              <!-- <li><span>21:30</span></li> -->
+              <li><span>22:00</span></li>
+              <!-- <li><span>22:30</span></li> -->
+              <li><span>23:00</span></li>
             </ul>
-          </li>
-
-          <li class="cd-schedule__group">
-            <div class="cd-schedule__top-info"><span>Thursday 4/7</span></div>
-
-            <ul>
-              <li class="cd-schedule__event">
-                <a data-start="20:00" data-end="22:00" data-content="event-4-talent" data-event="event-5" href="#0">
-                  <em class="cd-schedule__name">Talent Show</em>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="cd-schedule__group">
-            <div class="cd-schedule__top-info"><span>Friday 5/1</span></div>
-
-            <ul>
-              <li class="cd-schedule__event">
-                <a data-start="19:00" data-end="21:00" data-content="event-5-smash" data-event="event-6" href="#0">
-                  <em class="cd-schedule__name">Smash Ultimate Tournament</em>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-
-      <div class="cd-schedule-modal">
-        <header class="cd-schedule-modal__header">
-          <div class="cd-schedule-modal__content">
-            <span class="cd-schedule-modal__date"></span>
-            <h3 class="cd-schedule-modal__name"></h3>
           </div>
 
-          <div class="cd-schedule-modal__header-bg"></div>
-        </header>
+          <div class="cd-schedule__events">
+            <ul>
+              <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info"><span>Monday 4/5</span></div>
 
-        <div class="cd-schedule-modal__body">
-          <div class="cd-schedule-modal__event-info"></div>
-          <div class="cd-schedule-modal__body-bg"></div>
+                <ul>
+                  <li class="cd-schedule__event">
+                    <a
+                      data-start="19:00"
+                      data-end="20:00"
+                      data-content="event-1-jeopardy"
+                      data-event="event-1"
+                      href="#0"
+                    >
+                      <em class="cd-schedule__name">Jeopardy</em>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info">
+                  <span>Tuesday 4/6</span>
+                </div>
+
+                <ul>
+                  <li class="cd-schedule__event">
+                    <a
+                      data-start="19:00"
+                      data-end="20:00"
+                      data-content="event-2-networking"
+                      data-event="event-3"
+                      href="#0"
+                    >
+                      <em class="cd-schedule__name">Networking Night</em>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info">
+                  <span>Wednesday 4/7</span>
+                </div>
+
+                <ul>
+                  <li class="cd-schedule__event">
+                    <a
+                      data-start="9:00"
+                      data-end="12:00"
+                      data-content="event-3-kids"
+                      data-event="event-4"
+                      href="#0"
+                    >
+                      <em class="cd-schedule__name">Kids Day</em>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info">
+                  <span>Thursday 4/7</span>
+                </div>
+
+                <ul>
+                  <li class="cd-schedule__event">
+                    <a
+                      data-start="20:00"
+                      data-end="22:00"
+                      data-content="event-4-talent"
+                      data-event="event-5"
+                      href="#0"
+                    >
+                      <em class="cd-schedule__name">Talent Show</em>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="cd-schedule__group">
+                <div class="cd-schedule__top-info"><span>Friday 5/1</span></div>
+
+                <ul>
+                  <li class="cd-schedule__event">
+                    <a
+                      data-start="19:00"
+                      data-end="21:00"
+                      data-content="event-5-smash"
+                      data-event="event-6"
+                      href="#0"
+                    >
+                      <em class="cd-schedule__name"
+                        >Smash Ultimate Tournament</em
+                      >
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="cd-schedule-modal">
+            <header class="cd-schedule-modal__header">
+              <div class="cd-schedule-modal__content">
+                <span class="cd-schedule-modal__date"></span>
+                <h3 class="cd-schedule-modal__name"></h3>
+              </div>
+
+              <div class="cd-schedule-modal__header-bg"></div>
+            </header>
+
+            <div class="cd-schedule-modal__body">
+              <div class="cd-schedule-modal__event-info"></div>
+              <div class="cd-schedule-modal__body-bg"></div>
+            </div>
+
+            <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
+          </div>
+
+          <div class="cd-schedule__cover-layer"></div>
         </div>
-
-        <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
+        <!-- .cd-schedule -->
+      </div>
+    </div>
+    <a name="art"></a>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="panel" data-color="black">
+      <header class="cd-main-header text-center flex flex-column flex-center">
+        <h1 class="text-xl light">Art Display</h1>
+        <p class="light">Spring Quarter Week 2</p>
+        <p class="light">April 4th, 2021 - April 10th, 2021</p>
+        <p class="light">
+          Vote for your favorite piece here:
+          <a href="https://forms.gle/PqDffdZ9pPHFQdgr7"
+            >https://forms.gle/PqDffdZ9pPHFQdgr7</a
+          >
+          to be entered into a raffle for a $10 Amazon gift card.
+        </p>
+        <p class="light">
+          <em
+            >Make sure to login with your UCLA email to access the voting
+            form.</em
+          >
+        </p>
+      </header>
+      <br />
+      <br />
+      <br />
+      <h2 class="text-xl light text-center">For Review</h2>
+      <div class="row">
+        <div class="column">
+          <img
+            src="/assets/img/art_display/ellie.png"
+            onclick="openModal();currentSlide(1)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+        <div class="column">
+          <img
+            src="/assets/img/art_display/rohit1.png"
+            onclick="openModal();currentSlide(2)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+        <div class="column">
+          <img
+            src="/assets/img/art_display/sumaiya.jpeg"
+            onclick="openModal();currentSlide(3)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+        <div class="column">
+          <img
+            src="/assets/img/art_display/zofiaorlowski1.png"
+            onclick="openModal();currentSlide(4)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
       </div>
 
-      <div class="cd-schedule__cover-layer"></div>
-    </div> <!-- .cd-schedule -->
-  </div>
+      <br />
+      <br />
+      <br />
+      <h2 class="text-xl light text-center">For Display</h2>
+      <div class="row">
+        <div class="column">
+          <img
+            src="/assets/img/art_display/rohit2.png"
+            onclick="openModal2();currentSlide(1)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+        <div class="column">
+          <img
+            src="/assets/img/art_display/rohit3.png"
+            onclick="openModal2();currentSlide(2)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+        <div class="column">
+          <img
+            src="/assets/img/art_display/zofiaorlowski2.jpg"
+            onclick="openModal2();currentSlide(3)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+        <div class="column">
+          <img
+            src="/assets/img/art_display/zofiaorlowski3.jpg"
+            onclick="openModal2();currentSlide(4)"
+            class="thumbnail hover-shadow"
+          />
+        </div>
+      </div>
 
-  <script src="assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
-  <script src="assets/js/main.js"></script>
-</body>
+      <div id="myModal" class="custom-modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+          <div class="mySlides">
+            <div class="numbertext">1 / 4</div>
+            <img src="/assets/img/art_display/ellie.png" class="full-img" />
+          </div>
 
+          <div class="mySlides">
+            <div class="numbertext">2 / 4</div>
+            <img src="/assets/img/art_display/rohit1.png" class="full-img" />
+          </div>
+
+          <div class="mySlides">
+            <div class="numbertext">3 / 4</div>
+            <img src="/assets/img/art_display/sumaiya.jpeg" class="full-img" />
+          </div>
+
+          <div class="mySlides">
+            <div class="numbertext">4 / 4</div>
+            <img
+              src="/assets/img/art_display/zofiaorlowski1.png"
+              class="full-img"
+            />
+          </div>
+
+          <!-- Next/previous controls -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+          <!-- Caption text -->
+          <div class="caption-container">
+            <h5 id="img-title"></h5>
+            <p id="caption"></p>
+            <em id="author"></em>
+          </div>
+
+          <!-- Thumbnail image controls -->
+          <div class="thumbnail-container">
+            <div class="column">
+              <img
+                src="/assets/img/art_display/ellie.png"
+                onclick="currentSlide(1)"
+                class="thumbnail hover-shadow demo"
+                data-title="The Sun God"
+                data-caption="The sun god cries in liquid gold for the pain inside, untold."
+                data-author="Ellie Cheng, Computer Science and Engineering, 3rd Year"
+              />
+            </div>
+            <div class="column">
+              <img
+                src="/assets/img/art_display/rohit1.png"
+                onclick="currentSlide(2)"
+                class="thumbnail hover-shadow demo"
+                data-title="Your UID"
+                data-caption="Edited from a picture I hurriedly took running from CS 35Lto Covel (just before it closed), 'Your UID' aims to capture the serendipitous connection moments, sense of wonder, world of beauty that I use to measure my time at UCLA. 
+
+The film it is based on, 'Your Name,' chronicles the misadventures of two kids, separated by time, yet connected by magic and determination as they make sense of the world around them and each other's perspectives. The film's themes resonated with me deeply throughout my time at UCLA. During the past year, I craved that sense of undeniable connectedness with my peers and diversity of thought so much more, as I know many of my friends did too.
+
+South Campus walk always reminded me of the final scene of the film, where the two protagonists finally meet. Sometimes I wonder if I'll get to accidentally bump into a friend like that on my way to lecture ever again. (also peep NEOWISE)
+"
+                data-author="Rohit Tavare Computer Science, 4th Year"
+              />
+            </div>
+            <div class="column">
+              <img
+                src="/assets/img/art_display/sumaiya.jpeg"
+                onclick="currentSlide(3)"
+                class="thumbnail hover-shadow demo"
+                data-title="Chaiwalla"
+                data-caption="A recreation of a man I saw making chai in a bazaar in Karachi, Pakistan, made using acrylic on Bristol."
+                data-author="Sumaiya Kaiser, Bioengineering, 1st Year"
+              />
+            </div>
+            <div class="column">
+              <img
+                src="/assets/img/art_display/zofiaorlowski1.png"
+                onclick="currentSlide(4)"
+                class="thumbnail hover-shadow demo"
+                data-title="Blooming Heart"
+                data-caption="Pen and ink on paper of heart with flowers"
+                data-author="Zofia Orlowski, Mechanical Engineering, 2nd Year"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="myModal2" class="custom-modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+          <div class="mySlides2">
+            <div class="numbertext">1 / 4</div>
+            <img src="/assets/img/art_display/rohit2.png" class="full-img" />
+          </div>
+
+          <div class="mySlides2">
+            <div class="numbertext">2 / 4</div>
+            <img src="/assets/img/art_display/rohit3.png" class="full-img" />
+          </div>
+
+          <div class="mySlides2">
+            <div class="numbertext">3 / 4</div>
+            <img
+              src="/assets/img/art_display/zofiaorlowski2.jpg"
+              class="full-img"
+            />
+          </div>
+
+          <div class="mySlides2">
+            <div class="numbertext">4 / 4</div>
+            <img
+              src="/assets/img/art_display/zofiaorlowski3.jpg"
+              class="full-img"
+            />
+          </div>
+
+          <!-- Next/previous controls -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+          <!-- Caption text -->
+          <div class="caption-container">
+            <h5 id="img-title2"></h5>
+            <p id="caption2"></p>
+            <em id="author2"></em>
+          </div>
+
+          <!-- Thumbnail image controls -->
+          <div class="thumbnail-container">
+            <div class="column">
+              <img
+                src="/assets/img/art_display/rohit2.png"
+                onclick="currentSlide(1)"
+                class="thumbnail hover-shadow demo2"
+                data-title="Terminal Velocity"
+                data-caption="When you're doing something you like, something that feels so natural it's an extension of your body, at some point your mind just... clicks. Into the late hours of the night with that Study coffee, it's only you and the paper, only you and the code only you and the road."
+                data-author="Rohit Tavare, Computer Science, 4th Year"
+              />
+            </div>
+            <div class="column">
+              <img
+                src="/assets/img/art_display/rohit3.png"
+                onclick="currentSlide(2)"
+                class="thumbnail hover-shadow demo2"
+                data-title="Climb"
+                data-caption="I wonder if sometimes we tackle mountainous challenges, sacrifice our sleep, our wellbeing, just to tell people we accomplished something, instead of for the sake of scaling the challenge? Why do we build ourselves a world where we want to or are forced to pick the former instead of the latter? Does it have to be as black and white as this piece makes it out to be?"
+                data-author="Rohit Tavare, Computer Science, 4th Year"
+              />
+            </div>
+            <div class="column">
+              <img
+                src="/assets/img/art_display/zofiaorlowski2.jpg"
+                onclick="currentSlide(3)"
+                class="thumbnail hover-shadow demo2"
+                data-title="Blooming Soul"
+                data-caption="Pen and ink on paper of woman with flowers"
+                data-author="Zofia Orlowski, Mechanical Engineering, 2nd Year"
+              />
+            </div>
+            <div class="column">
+              <img
+                src="/assets/img/art_display/zofiaorlowski1.png"
+                onclick="currentSlide(4)"
+                class="thumbnail hover-shadow demo2"
+                data-title="Blooming Mind"
+                data-caption="Pen and ink on paper of head with flowers"
+                data-author="Zofia Orlowski, Mechanical Engineering, 2nd Year"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/util.js"></script>
+    <!-- util functions included in the CodyHouse framework -->
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>

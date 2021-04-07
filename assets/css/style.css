@@ -1312,6 +1312,7 @@ background-color: #444444;
     padding: 2px 16px;
     color: white;
     max-height: 300px;
+    min-height: 90px;
     overflow-y: auto;
 }
 
